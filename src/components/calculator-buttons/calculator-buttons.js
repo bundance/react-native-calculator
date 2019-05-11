@@ -1,6 +1,13 @@
 import React from "react";
 import { View, Text, TouchableNativeFeedback } from 'react-native';
 import Styled from "styled-components";
+import { buttonTypes } from '../../constants/button-types';
+
+const buttonColourLookupTable = {
+    [buttonTypes.OPERATOR]: '#232B35',
+    [buttonTypes.OPERAND]: '#3A4654',
+    [buttonTypes.CONTROL]: 'red',
+}
 
 const ButtonsContainer = Styled.View`
     alignItems: flex-start;
@@ -10,7 +17,7 @@ const ButtonsContainer = Styled.View`
 `;
 
 const CalculatorButton = Styled(View)`
-    backgroundColor: #3A4654;
+    backgroundColor: ${props => buttonColourLookupTable[props.buttonType]};
     width: ${props => (100 * props.width)};
     alignSelf: center;
     height: 100;
@@ -25,17 +32,6 @@ const CalculatorKey = Styled(Text)`
     textAlign: center;
 `;
 
-// background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
-// border: 0;
-// border-radius: 0 !important;
-// box-shadow: 0 3px 5px 2px rgba(255, 105, 135, .3);
-
-
-// alignItems: flex-start;
-// border: 1px;
-// borderColor: #000000;
-// flex: 0;
-
 export const CalculatorButtons = ({
         buttons,
         onClick,
@@ -46,7 +42,7 @@ export const CalculatorButtons = ({
                 key={`id${button.id || button.name}`}
                 onPress={onClick(button)}
                 background={TouchableNativeFeedback.SelectableBackground()}>
-                <CalculatorButton id={`id${button.id || button.name}`} width={button.width || 1} >
+                <CalculatorButton id={`id${button.id || button.name}`} width={button.width || 1} buttonType={button.buttonType}>
                     <CalculatorKey>{button.name}</CalculatorKey>
                 </CalculatorButton>
             </TouchableNativeFeedback>
